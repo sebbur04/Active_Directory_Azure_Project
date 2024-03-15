@@ -1,3 +1,7 @@
+#---------------------------------------
+#IKKE FERDIG
+#---------------------------------------
+
 # Title: Add group members in Microsoft Entra Identity
 # Created: 2024-03-15
 # This scrip add's users to their department security group in Microsoft Entra Identity
@@ -10,7 +14,7 @@
 # New-MgGroupMember - https://learn.microsoft.com/en-us/powershell/module/microsoft.graph.groups/new-mggroupmember?view=graph-powershell-1.0
 #
 
-$TenantID = "bd0944c8-c04e-466a-9729-d7086d13a653" # Remember to change this to your own TenantID
+$TenantID = "42b38ed3-4451-4a95-a62f-b2250c2683ac" # Remember to change this to your own TenantID
 Connect-MgGraph -TenantId $TenantID -Scopes "User.ReadWrite.All", "Group.ReadWrite.All", "Directory.ReadWrite.All", "RoleManagement.ReadWrite.Directory"
 
 # Get the current session details

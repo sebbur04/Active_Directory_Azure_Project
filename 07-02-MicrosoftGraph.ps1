@@ -1,12 +1,16 @@
+#---------------------------------------
+#FERDIG
+#---------------------------------------
+
 # Install Microsoft Graph Module
 # Install-Module Microsoft.Graph
+Install-Module Microsoft.Graph #FOR Å LASTE NED MICROSOFT GRAPH MODUL, IKKE KJØR IGJEN, LASTET NED LOKALT
 # Get-InstaledModule -Name Microsoft.Graph.*
 
-
-$TenantID = "bd0944c8-c04e-466a-9729-d7086d13a653"
+$TenantID = "42b38ed3-4451-4a95-a62f-b2250c2683ac" #Local EntraID used on Micrsoft Azure tenant!! MY OWN 
 Connect-MgGraph -TenantId $TenantID -Scopes "User.ReadWrite.All", "Group.ReadWrite.All", "Directory.ReadWrite.All", "RoleManagement.ReadWrite.Directory"
 
-
+#VISER DETALJER OM SELVE OPPKOBLINGEN TIL MICROSOFT AZURE
 $Details = Get-MgContext
 $Scopes = $Details | Select-Object -ExpandProperty Scopes
 $Scopes = $Scopes -join ","

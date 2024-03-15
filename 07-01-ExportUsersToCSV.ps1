@@ -1,5 +1,10 @@
+#---------------------------------------
+# FERDIG; GJORT PÅ MNG I REMOTE DESKTOP
+#---------------------------------------
+
+
 # Define the path to the CSV file where the user data will be saved
-$csvFilePath = "C:\git-projects\dcst1005\dcst1005\07-00-CSV-Users.csv"
+$csvFilePath = "C:\git-projects\dcst1005\dcst1005\07-00-CSV-Users.csv" #GJORT MED SOURCE PATH TIL MANAGER PCEN
 
 # Define the LDAP path to the specific OU from which to retrieve users
 # get-adorganizationalUnit -Filter * | where-Object {$_.name -like "*users*"} | ft name, distinguishedName

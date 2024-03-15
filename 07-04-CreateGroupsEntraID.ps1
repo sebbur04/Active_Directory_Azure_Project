@@ -1,3 +1,7 @@
+#---------------------------------------
+#IKKE FERDIG
+#---------------------------------------
+
 # Title: Create security groups in Microsoft Entra Identity
 # Created: 2024-03-15
 # This scrip creates security groups in Microsoft Entra Identity based on a CSV-file with group names
@@ -12,7 +16,7 @@
 #
 #
 
-$TenantID = "bd0944c8-c04e-466a-9729-d7086d13a653" # Remember to change this to your own TenantID
+$TenantID = "42b38ed3-4451-4a95-a62f-b2250c2683ac" # Remember to change this to your own TenantID
 Connect-MgGraph -TenantId $TenantID -Scopes "User.ReadWrite.All", "Group.ReadWrite.All", "Directory.ReadWrite.All", "RoleManagement.ReadWrite.Directory"
 
 # Get the current session details
