@@ -1,3 +1,5 @@
+#FERDIG
+
 $rootpath = "C:\Users\burmo\Documents\Oblig7 og senere\dcst1005"
 
 
@@ -7,11 +9,13 @@ $scriptBlock = {
     $data += Get-Counter '\Processor(_Total)\% Processor Time' | ForEach-Object { $_.CounterSamples }
     $data += Get-Counter '\Memory\% Committed Bytes In Use' | ForEach-Object { $_.CounterSamples }
     $data += Get-Counter '\Memory\Available MBytes' | ForEach-Object { $_.CounterSamples }
+    $data += Get-Counter '\LogicalDisk(*)\% Disk Time' | ForEach-Object { $_.CounterSamples }
+    $data += Get-Counter '\Network Interface(*)\Bytes Total/sec' | ForEach-Object { $_.CounterSamples }
     $data
 }
 
 # Duration and interval settings
-$duration = 2 #24 * 60 # 24 hours in minutes
+$duration = 20 #24 * 60 # 24 hours in minutes
 $interval = 1 # Interval in seconds
 $startTime = Get-Date
 
