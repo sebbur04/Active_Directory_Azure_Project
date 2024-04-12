@@ -1,3 +1,10 @@
+##########################################################
+
+KODEN KLASRER IKKE Å LAGE VM; FEILER
+
+############################################################
+
+
 # In this script, we will create Virtual Machines in different subnets in the same VNET, 
 # and different VNETs in the same Resource Group. Then we are going to see how the trafic
 # flows between the VMs in the same VNET and different VNETs.
@@ -8,9 +15,10 @@
 # Import-Module Az
 
 
-# Variables - Correct for my Azure enviroment
-$tenantID = "42b38ed3-4451-4a95-a62f-b2250c2683ac"
-$subscrptionID = "a359d4aa-201e-43e6-bce2-654bb5387e6a"
+
+# Variables
+$tenantID = "42b38ed3-4451-4a95-a62f-b2250c2683ac" # Remember to change this to your own TenantID
+$subscrptionID = "a359d4aa-201e-43e6-bce2-654bb5387e6a" # Remember to change this to your own SubscriptionID
 
 # Connect to Azure
 Connect-AzAccount -Tenant $tenantID -Subscription $subscrptionID
@@ -30,8 +38,8 @@ Get-AzVMImage -Location $locName -PublisherName $pubName -Offer $offerName -Sku 
 
 
 # Variables for VMs
-$prefix = 'seb'
-$rgName = $prefix + '-seb-rg-powershell-001-InfraIT'
+$prefix = 'tim'
+$rgName = $prefix + '-rg-powershelldemo-001'
 $location = 'uksouth'
 $vnetName1 = $prefix + '-vnet-powershelldemo-001'
 $vnetName2 = $prefix + '-vnet-powershelldemo-002'
@@ -39,22 +47,40 @@ $subnetName1 = $prefix + '-snet-powershelldemo-001'
 $subnetName2 = $prefix + '-snet-powershelldemo-002'
 $vmName1 = $prefix + '-vm-powershelldemo-001'
 $publicIPName1 = $prefix + '-pip-powershelldemo-001'
-$publicIPName2 = $prefix + '-pip-powershelldemo-002'
 $vmName2 = $prefix + '-vm-powershelldemo-002'
+$publicIPName2 = $prefix + '-pip-powershelldemo-002'
 $vmSize = 'Standard_B1s'
-$adminUsername = 'tim'
+$adminUsername = 'seb'
 $adminPassword = 'SDfsgl!_DFahS24!fsdf'
 $secureAdminPassword = ConvertTo-SecureString -String $adminPassword -AsPlainText -Force
 $image = 'debian11'
 
+#Check for existing resource group, vnet and subnet
+$rg = Get-AzResourceGroup -Name $rgName 
+$vnet1 = Get-AzVirtualNetwork -Name $vnetName1 -ResourceGroupName $rgName 
+$vnet2 = Get-AzVirtualNetwork -Name $vnetName2 -ResourceGroupName $rgName 
+$subnet1 = Get-AzVirtualNetworkSubnetConfig -Name $subnetName1 -VirtualNetwork $vnet1 
+$subnet2 = Get-AzVirtualNetworkSubnetConfig -Name $subnetName2 -VirtualNetwork $vnet2
+
+##### ----------- Gammel Kode ------------ #####
+
 
 
 # Check if Resource Group, VNETs and Subnets exists
-$rg = Get-AzResourceGroup -Name $rgName -ErrorAction SilentlyContinue
-$vnet1 = Get-AzVirtualNetwork -Name $vnetName1 -ResourceGroupName $rgName -ErrorAction SilentlyContinue
-$vnet2 = Get-AzVirtualNetwork -Name $vnetName2 -ResourceGroupName $rgName -ErrorAction SilentlyContinue
-$subnet1 = Get-AzVirtualNetworkSubnetConfig -Name $subnetName1 -VirtualNetwork $vnet1 -ErrorAction SilentlyContinue
-$subnet2 = Get-AzVirtualNetworkSubnetConfig -Name $subnetName2 -VirtualNetwork $vnet2 -ErrorAction SilentlyContinue
+#$rg = Get-AzResourceGroup -Name $rgName -ErrorAction SilentlyContinue
+#$vnet1 = Get-AzVirtualNetwork -Name $vnetName1 -ResourceGroupName $rgName -ErrorAction SilentlyContinue
+#$vnet2 = Get-AzVirtualNetwork -Name $vnetName2 -ResourceGroupName $rgName -ErrorAction SilentlyContinue
+# If vnet is null, drop subnet check
+if (!$vnet1 -eq $null -or !$vnet2 -eq $null) {
+    $subnet1 = Get-AzVirtualNetworkSubnetConfig -Name $subnetName1 -VirtualNetwork $vnet1 -ErrorAction SilentlyContinue
+    $subnet2 = Get-AzVirtualNetworkSubnetConfig -Name $subnetName2 -VirtualNetwork $vnet2 -ErrorAction SilentlyContinue
+}
+
+# If $rg is null then create the Resource Group
+if ($rg -eq $null) {
+    New-AzResourceGroup -Name $rgName -Location $location
+}
+    
 
 # Create Public IPs
 $publicIP1 = @{
@@ -107,7 +133,7 @@ $vmConfig2 = New-AzVMConfig -VMName $vmName2 -VMSize $vmSize |
             Set-AzVMOperatingSystem -Linux `
             -ComputerName $vmName2 `
             -Credential (New-Object System.Management.Automation.PSCredential ($adminUsername, $secureAdminPassword)) |
-            Set-AzVMSourceImage -PublisherName "Debian" -Offer "debian-11" -Skus "11" -Version "latest" |
+            Set-AzVMSourceImage -PublisherName "Debian" -Offer $image -Skus "11" -Version "latest" |
             Add-AzVMNetworkInterface -Id $nic2.Id
 
 

@@ -1,5 +1,5 @@
 # Description: This script is used to connect to Azure using the Az module
-# Install-Module -Name Az -AllowClobber -Scope CurrentUser
+# A
 ### FERDIG
 
 # Import the Az module
