@@ -1,5 +1,5 @@
 
-#### ER PÅ DENNE ####
+#### FERDIG, SE WA9 I WORD ####
 
 # Define the prefix to search for VMs
 $prefix = "seb"

@@ -1,3 +1,5 @@
+####FERDIG
+
 # This script creates four VMs in Azure using the Az module.
 # The script defines three functions: New-AzurePublicIPs, New-AzureVMNICs, and New-AzureVMs.
 # The New-AzurePublicIPs function creates public IP addresses.
@@ -118,7 +120,7 @@ $vmName4 = "$prefix-vm-hrdev-dev-uk-001"
 
 # VM configurations - Change username and password
 $vmSize = 'Standard_B1s'
-$adminUsername = 'tim'
+$adminUsername = 'seb'
 $adminPassword = 'SDfsgl!_DFahS24!fsdf'
 $secureAdminPassword = ConvertTo-SecureString -String $adminPassword -AsPlainText -Force
 $image = 'debian-11'
